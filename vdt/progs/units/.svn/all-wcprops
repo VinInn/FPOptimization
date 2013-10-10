@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/reps/vdt/!svn/ver/47/trunk/progs/units
+END
+test_fcnComparison.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/reps/vdt/!svn/ver/2/trunk/progs/units/test_fcnComparison.cpp
+END
+atan2_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/reps/vdt/!svn/ver/39/trunk/progs/units/atan2_test.cpp
+END
+printInstSet.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/reps/vdt/!svn/ver/2/trunk/progs/units/printInstSet.cpp
+END
+test_randomPool.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/reps/vdt/!svn/ver/2/trunk/progs/units/test_randomPool.cpp
+END
+log_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/reps/vdt/!svn/ver/2/trunk/progs/units/log_test.cpp
+END
+tan_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/reps/vdt/!svn/ver/2/trunk/progs/units/tan_test.cpp
+END
+atan_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/reps/vdt/!svn/ver/44/trunk/progs/units/atan_test.cpp
+END
+cos_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/reps/vdt/!svn/ver/44/trunk/progs/units/cos_test.cpp
+END
+deleteme.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/reps/vdt/!svn/ver/2/trunk/progs/units/deleteme.cpp
+END
+acos_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/reps/vdt/!svn/ver/2/trunk/progs/units/acos_test.cpp
+END
+test_fcnResponse.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/reps/vdt/!svn/ver/2/trunk/progs/units/test_fcnResponse.cpp
+END
+test_fcnPerformance.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/reps/vdt/!svn/ver/29/trunk/progs/units/test_fcnPerformance.cpp
+END
+sqrt_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/reps/vdt/!svn/ver/2/trunk/progs/units/sqrt_test.cpp
+END
+sin_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/reps/vdt/!svn/ver/44/trunk/progs/units/sin_test.cpp
+END
+asin_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/reps/vdt/!svn/ver/2/trunk/progs/units/asin_test.cpp
+END
+inv_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/reps/vdt/!svn/ver/2/trunk/progs/units/inv_test.cpp
+END
+fpDifferentBit.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/reps/vdt/!svn/ver/2/trunk/progs/units/fpDifferentBit.cpp
+END
+exp_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/reps/vdt/!svn/ver/2/trunk/progs/units/exp_test.cpp
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/reps/vdt/!svn/ver/47/trunk/progs/units/CMakeLists.txt
+END
