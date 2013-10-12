@@ -25,6 +25,19 @@ int main(int npar, char * []) {
   printf("nextafterf(s,maxf) =  %g %a\n",nextafterf(s,maxf),nextafterf(s,maxf));
   printf("nextafterf(s,maxf)-s = %g %a\n\n\n",nextafterf(s,maxf)-s,nextafterf(s,maxf)-s);
 
+  float w=s;
+  for (auto i=0; i<1000000; ++i)
+    w+=t;
+
+  printf("w= %g %a\n",w,w);
+
+  w=0;
+  for (auto i=0; i<1000000; ++i)
+    w+=t;
+
+  printf("w= %g %a\n",w,w);
+
+
   return 0;
 
 }

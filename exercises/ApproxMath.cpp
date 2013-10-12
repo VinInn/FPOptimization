@@ -81,7 +81,7 @@ void accTest(STD stdf, APPROX approx, int degree) {
   while(x.ui32<0xffffffff) {
     x.ui32++;
     // remove nans..
-    if ( (x.ui32&0x7f80000==0x7f80000) continue;
+    if ( (x.ui32&0x7f80000)==0x7f80000) continue;
     r.f=approx(x.f);
     ref.f=stdf(double(x.f)); // double-prec one  (no hope with -fno-math-errno)
     int d=abs(r.i32-ref.i32);
