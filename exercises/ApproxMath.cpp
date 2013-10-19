@@ -198,7 +198,7 @@ int main() {
   perf<8,2>();
   perf<8,3>();
 
-
+  /*
   accTest(::exp,approx_expf<2>,2);
   accTest(::exp,approx_expf<3>,3);
   accTest(::exp,approx_expf<4>,4);
@@ -208,6 +208,6 @@ int main() {
   accTest(::log,approx_logf<2>,2);
   accTest(::log,approx_logf<4>,4);
   accTest(::log,approx_logf<8>,8);
-
+  */
   return 0;
 }
