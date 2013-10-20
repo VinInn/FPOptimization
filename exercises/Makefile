@@ -17,9 +17,9 @@ IPOOPT = -flto -fvisibility=hidden
 INCDIR = -I../include -I../vdt/include
 
 
-.PHONY : run all clean afloat intLoop floatLoop look patriot sum lsum nsum tsum fcos precision foperations kernel assocMath SimpleVectorization condExpr OptimizeIt Benchmark CrossingPlane FourVec AoSvsSoA BenchSoa ApproxMath Approximations sincos
+.PHONY : run all clean afloat intLoop floatLoop look patriot sum lsum nsum tsum fcos precision foperations kernel assocMath SimpleVectorization condExpr OptimizeIt Benchmark CrossingPlane FourVec AoSvsSoA BenchSoa ApproxMath Approximations sincos ptcut
 
-all : afloat intLoop floatLoop look patriot fcos precision foperations kernel assocMath SimpleVectorization condExpr OptimizeIt Benchmark CrossingPlane FourVec AoSvsSoA BenchSoa lsum ApproxMath Approximations sincos
+all : afloat intLoop floatLoop look patriot fcos precision foperations kernel assocMath SimpleVectorization condExpr OptimizeIt Benchmark CrossingPlane FourVec AoSvsSoA BenchSoa lsum ApproxMath Approximations sincos ptcut
 
 sum : sum_O sum_O2 sum_O3 sum_fast sum_vect sum_ipo
 
@@ -51,6 +51,7 @@ BenchSoa : BenchSoa_O2 BenchSoa_vect
 Approximations : Approximations_O2 Approximations_vect
 ApproxMath : ApproxMath_O2 ApproxMath_vect
 sincos : sincos_O2 sincos_vect
+ptcut : ptcut_O2 ptcut_vect
 
 %_O.o : %.cc
 	$(CXX) $(INCDIR) -c $< -o $@ -O -g 
