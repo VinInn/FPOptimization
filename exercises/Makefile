@@ -1,10 +1,11 @@
 #
-#  requires latest-greatest gcc (gcc 4.7.2 october release)
+#  requires latest-greatest gcc (gcc 4.7.2 or later)
 #  --param max-completely-peel-times=1  required due to a GCC ideosyncracy
 #  --param vect-max-version-for-alias-checks=30 required due to GCC limitations
 #  -ftree-loop-if-convert-stores   check GCC man page
 
-CXX = c++ ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=corei7 
+CXX = c++-482 ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=native 
+# CXX = c++ ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=corei7 
 # -march=native
 
 
