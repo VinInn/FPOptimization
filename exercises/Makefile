@@ -4,6 +4,8 @@
 #  --param vect-max-version-for-alias-checks=30 required due to GCC limitations
 #  -ftree-loop-if-convert-stores   check GCC man page
 
+
+CXX-AVX2 = c++-482 ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=core-avx2 
 CXX = c++-482 ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=native 
 # CXX = c++ ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=corei7 
 # -march=native
@@ -55,33 +57,33 @@ sincos : sincos_O2 sincos_vect
 ptcut : ptcut_O2 ptcut_vect
 
 %_O.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O -g 
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O -g 
 
 %_O2.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O2 -g
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O2 -g
 
 
 %_O2.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O2 -g
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O2 -g
 
 %_O3.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O3 -g
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O3 -g
 
 %_fast.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -Ofast -g
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -Ofast -g
 
 %_vect.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -Ofast ${VECTOPT} -g
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -Ofast ${VECTOPT} -g
 
 %_defvect.o : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O3 -g -ftree-vectorizer-verbose=2
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O3 -g -ftree-vectorizer-verbose=2
 
 
 %_O.s : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O -g 
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O -g 
 
 %_O2.s : %.cc
-	$(CXX) $(INCDIR) -c $< -o $@ -O2 -g
+	$(CXX-AVX2) $(INCDIR) -c $< -o $@ -O2 -g
 
 
 %_O2.s : %.cc
