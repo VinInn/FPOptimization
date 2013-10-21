@@ -24,7 +24,7 @@ inline float phi(float x, float y) {
   return std::atan2(y,x);
 }
 
-inline eta(float x, float y, float z) { float t(z/pt(x,y)); return ::asinhf(t);} 
+inline float eta(float x, float y, float z) { float t(z/pt(x,y)); return ::asinhf(t);} 
 
 
 inline float dot(float x1, float y1, float x2, float y2) {
@@ -73,7 +73,8 @@ int main() {
     long long tl = -refClock();
     constexpr float ptcut = 0.5f;
     float sq=0.;
-    for (int i=0;i!=NN;++i) {
+    for (int i=0; i<NN;++i) {
+      // sq+= (pt(x[i],y[i])>ptcut) ? x[i]+y[i] : 0.f;
       if (pt(x[i],y[i])>ptcut) 
 	sq+= x[i]+y[i];
     }
@@ -122,7 +123,7 @@ int main() {
    constexpr float phicut = 0.1f;
    float sq=0.;
    for (int i=0;i!=NN-1;++i) {
-     for (int j=i+1;j<std::min(i+10,NN);++j) {
+     for (int j=i+1;j<std::min(i+16,NN);++j) {
        if (dphi(phi(x[i],y[i]),phi(x[j],y[j]))<phicut) 
 	 sq+= x[j]+y[j];
      }
@@ -139,7 +140,7 @@ int main() {
    constexpr float coscut = std::cos(0.1f);
    float sq=0.;
    for (int i=0;i!=NN-1;++i) {
-     for (int j=i+1;j<std::min(i+10,NN);++j) {
+     for (int j=i+1;j<std::min(i+16,NN);++j) {
        if (cdphi(x[i],y[i],x[j],y[j])>coscut) 
 	 sq+= x[j]+y[j];
      }
@@ -157,10 +158,12 @@ int main() {
    constexpr float coscut2 = std::copysign(coscut*coscut,coscut); 
    float sq=0.;
    for (int i=0;i!=NN-1;++i) {
-     for (int j=i+1;j<std::min(i+10,NN);++j) {
+     // auto m1 = pt2(x[i],y[i]);
+     for (int j=i+1;j<std::min(i+16,NN);++j) {
        auto d = dot(x[i],y[i],x[j],y[j]);
        if (
 	   std::copysign(d*d,d) > coscut2*pt2(x[i],y[i])*pt2(x[j],y[j])
+	   // std::copysign(d*d,d) > coscut2*m1*pt2(x[j],y[j])
 	   ) sq+= x[j]+y[j];
      }
    }
