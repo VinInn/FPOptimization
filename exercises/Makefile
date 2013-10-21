@@ -77,6 +77,31 @@ ptcut : ptcut_O2 ptcut_vect
 	$(CXX) $(INCDIR) -c $< -o $@ -O3 -g -ftree-vectorizer-verbose=2
 
 
+%_O.s : %.cc
+	$(CXX) $(INCDIR) -c $< -o $@ -O -g 
+
+%_O2.s : %.cc
+	$(CXX) $(INCDIR) -c $< -o $@ -O2 -g
+
+
+%_O2.s : %.cc
+	$(CXX) $(INCDIR) -S $< -o $@ -O2 -g
+
+%_O3.s : %.cc
+	$(CXX) $(INCDIR) -S $< -o $@ -O3 -g
+
+%_fast.s : %.cc
+	$(CXX) $(INCDIR) -S $< -o $@ -Ofast -g
+
+%_vect.s : %.cc
+	$(CXX) $(INCDIR) -S $< -o $@ -Ofast ${VECTOPT} -g
+
+%_defvect.s : %.cc
+	$(CXX) $(INCDIR) -S $< -o $@ -O3 -g -ftree-vectorizer-verbose=2
+
+
+
+
 
 %_O : %.cpp
 	$(CXX) $(INCDIR) $< -o $@ -O
