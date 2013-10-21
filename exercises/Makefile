@@ -5,7 +5,7 @@
 #  -ftree-loop-if-convert-stores   check GCC man page
 
 
-CXX-AVX2 = c++-482 ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=core-avx2 
+CXX-AVX2 = c++-482 ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=corei7-avx 
 CXX = c++-482 ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=native 
 # CXX = c++ ${ADDOPT} -std=c++11 -Wall -Wno-format  -Wstrict-overflow -Wunsafe-loop-optimizations -march=corei7 
 # -march=native
