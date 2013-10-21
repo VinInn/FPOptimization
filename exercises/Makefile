@@ -131,4 +131,4 @@ run : all
 	./run.sh
 
 clean:
-	rm *.o *_O *_O2 *_O3 *_fast *_vect *_ipo
+	rm *.s *.o *_O *_O2 *_O3 *_fast *_vect *_ipo
