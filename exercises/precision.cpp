@@ -2,17 +2,23 @@
 #include<cstdio>
 #include<limits>
 #include<cmath>
+#include<cstdlib>
 
 
-
-int main(int npar, char * []) {
+int main(int npar, char * pars[]) {
 
   constexpr auto maxf = std::numeric_limits<float>::max();
   
 
   float a = 100.f+3.f/7.f;
   float b = 4.f/7.f;
-  if (npar>2) b=nextafterf(b,-maxf);
+
+  if (npar>2) {
+    a = atof(pars[1]);
+    b = atof(pars[2]);
+  }
+ 
+  if (npar>3) b=nextafterf(b,-maxf);
 
 
   float s =a+b;
