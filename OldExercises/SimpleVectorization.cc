@@ -18,11 +18,13 @@ float innerProduct() {
 
 
 void condAssign() {
+#pragma GCC ivdep
   for(int i=0; i!=1024; ++i)
     if (v2[i]>v1[i]) v0[i]=v2[i]*v3[i];
 }
 
 void condAssign2() {
+#pragma GCC ivdep
   for(int i=0; i!=1024; ++i)
     v0[i] = (v2[i]>v1[i]) ? v2[i]*v3[i] : v0[i];
 }
