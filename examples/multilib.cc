@@ -4,31 +4,31 @@ typedef float __attribute__( ( vector_size( 64 ) ) ) float32x16_t;
 
 
 
-float __attribute__ ((__target__ ("default")))
+float //__attribute__ ((__target__ ("default")))
 mySum(float vx, float vy) {
   return vx+vy;
 }
 
 
 float __attribute__ ((__target__ ("sse3")))
-mySum(float vx, float vy) {
+mySum_3(float vx, float vy) {
   return vx+vy;
 }
 
 
 float __attribute__ ((__target__ ("arch=nehalem")))
-mySum(float vx, float vy) {
+mySum_4(float vx, float vy) {
   return vx+vy;
 }
 
 float __attribute__ ((__target__ ("fma")))
-mySum(float vx, float vy) {
+mySum_fma(float vx, float vy) {
   return vx+vy;
 }
 
 
 float __attribute__ ((__target__ ("avx512f")))
-mySum(float vx, float vy) {
+mySum_512(float vx, float vy) {
   return vx+vy;
 }
 
@@ -39,12 +39,12 @@ mySum(float32x4_t vx, float32x4_t vy) {
 }
 
 float32x4_t __attribute__ ((__target__ ("sse3")))
-mySum(float32x4_t vx, float32x4_t vy) {
+mySum_3(float32x4_t vx, float32x4_t vy) {
   return vx+vy;
 }
 
 float32x4_t __attribute__ ((__target__ ("arch=nehalem")))
-mySum(float32x4_t vx, float32x4_t vy) {
+mySum_4(float32x4_t vx, float32x4_t vy) {
   return vx+vy;
 }
 
@@ -54,30 +54,30 @@ mySum(float32x4_t vx, float32x4_t vy) {
 }
 
 float32x4_t __attribute__ ((__target__ ("arch=bdver1")))
-mySum(float32x4_t vx, float32x4_t vy) {
+mySum_amd(float32x4_t vx, float32x4_t vy) {
   return vx+vy;
 }
 
-/*
+
 float32x4_t __attribute__ ((__target__ ("avx512f")))
-mySum(float32x4_t vx, float32x4_t vy) {
+mySum_512(float32x4_t vx, float32x4_t vy) {
   return vx+vy;
 }
-*/
 
-/*
+
+
 
 float32x8_t __attribute__ ((__target__ ("arch=haswell")))  
-mySum(float32x8_t vx, float32x8_t vy) {
+mySum_avx2(float32x8_t vx, float32x8_t vy) {
   return vx+vy;
 }
 
 float32x8_t  __attribute__ ((__target__ ("avx512f"))) 
-mySum(float32x8_t vx, float32x8_t vy) {
+mySum_512(float32x8_t vx, float32x8_t vy) {
   return vx+vy;
 }
 
-*/
+
 
 /*
 float32x16_t  __attribute__ ((__target__ ("sse3"))) 
