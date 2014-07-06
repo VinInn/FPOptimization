@@ -216,10 +216,33 @@ end;
 
 */
 
+template<typename Float, bool FMA=true>
+struct RangeRedution {
+  static Float impl(Float x, Float z) { 
+    // FMA specific range reduction
+    constexpr float log2F = 0xb.17218p-4;
+     return x-z*log2F;
+  }
+};
+
+template<typename Float>
+struct RangeRedution<Float,false> {
+  static Float impl(Float x, Float z) { 
+    constexpr float log2H = float(0xb.172p-4);
+    constexpr float log2L = float(0x1.7f7d1cp-20);
+    // Cody-and-Waite accurate range reduction. FMA-safe.
+    Float y = x;
+    y -= z*log2H;
+    y -= z*log2L;
+    return y;
+  }
+};
+
+
 
 // valid for -87.3365 < x < 88.7228
-template<typename Float, int DEGREE>
-inline Float unsafe_expf_impl(Float x) {
+template<typename Float, int DEGREE, bool FMA>
+inline Float __attribute__((always_inline)) unsafe_expf_impl(Float x) {
   using namespace approx_math;
   using Int = typename toIF<Float>::itype;
   using UInt = typename toIF<Float>::uitype;
@@ -244,20 +267,8 @@ inline Float unsafe_expf_impl(Float x) {
   e = (x>0) ? e : -e;
   Float z = toIF<Float>::convert(e);
 
-  Float y;
-#ifndef FMA 
-  constexpr float log2H = float(0xb.172p-4);
-  constexpr float log2L = float(0x1.7f7d1cp-20);
-  // Cody-and-Waite accurate range reduction. FMA-safe.
-  y = x;
-  y -= z*log2H;
-  y -= z*log2L;
-#else
- // FMA specific range reduction
-  constexpr float log2F = 0xb.17218p-4;
-  y=x-z*log2F;
-#endif
-  
+  Float y = RangeRedution<Float,FMA>::impl(x,z);
+
 
   // we want RN above because it centers the interval around zero
   // but then we could have 2^e = below being infinity when it shouldn't 
@@ -279,12 +290,12 @@ inline Float unsafe_expf_impl(Float x) {
 
 #ifndef NO_APPROX_MATH
 
-template<typename Float, int DEGREE>
+template<typename Float, int DEGREE, bool FMA>
 inline Float unsafe_expf(Float x) {
-  return  unsafe_expf_impl<Float,DEGREE>(x); 
+  return  unsafe_expf_impl<Float,DEGREE, FMA>(x); 
 }
 
-template<typename Float, int DEGREE>
+template<typename Float, int DEGREE, bool FMA>
 inline Float approx_expf(Float x) {
   using namespace approx_math;
   constexpr Float zero{0.f};
@@ -297,18 +308,18 @@ inline Float approx_expf(Float x) {
   // using std::min; using std::max;
   using approx_math::min; using approx_math::max;
   x = min(max(x,zero_threshold_ftz),inf_threshold);
-  Float r = unsafe_expf<Float,DEGREE>(x); 
+  Float r = unsafe_expf<Float,DEGREE,FMA>(x); 
 
    return r;
 }
 
 
-#else
-template<typename Float, int DEGREE>
+#else  // only for float...
+template<typename Float, int DEGREE, bool FMA>
 inline Float unsafe_expf(Float x) {
   return std::exp(x);
 }
-template<typename Float, int DEGREE>
+template<typename Float, int DEGREE, bool FMA>
 inline Float approx_expf(Float x) {
   return std::exp(x);
 }
