@@ -6,9 +6,19 @@
 #include<iostream>
 
 typedef float __attribute__( ( vector_size( 16 ) ) ) float32x4_t;
+typedef float __attribute__( ( vector_size( 32 ) ) ) float32x8_t;
+typedef float __attribute__( ( vector_size( 64 ) ) ) float32x16_t;
 
 
 float32x4_t myExp(float32x4_t vx) {
+  return approx_expf<decltype(vx),6>(vx);
+}
+
+float32x8_t myExp(float32x8_t vx) {
+  return approx_expf<decltype(vx),6>(vx);
+}
+
+float32x16_t myExp(float32x16_t vx) {
   return approx_expf<decltype(vx),6>(vx);
 }
 

@@ -85,11 +85,12 @@ namespace approx_math {
     static uitype ftoui(VF f) { uitype i; memcpy(&i,&f,NV); return i;}
     static VF uitof(uitype i) { VF f; memcpy(&f,&i,NV); return f;}
 
-    // to be specialized for 2,4,8,16
-    static VF convert(itype i) { return _mm_cvtepi32_ps(i);}
-    static itype convert(VF f) { return _mm_cvttps_epi32(f);}
-    // static VF convert(itype i) { return VF{float(i[0]),float(i[1]),float(i[2]),float(i[3])};}
-    // static itype convert(VF f) { return itype{int(f[0]),int(f[1]),int(f[2]),int(f[3])};}
+    // to be specialized for 2,4,8,16 float and double
+    // static VF convert(itype i) { return _mm_cvtepi32_ps(i);}
+    // static itype convert(VF f) { return _mm_cvttps_epi32(f);}
+    //  this SLP-vectorize though
+    static VF convert(itype i) { VF f; for (int j=0;j<NV;++j) f[j]=i[j]; return f;}
+    static itype convert(VF f) { itype i; for (int j=0;j<NV;++j) i[j]=f[j]; return i;}
 
 
 
@@ -269,7 +270,7 @@ inline Float unsafe_expf_impl(Float x) {
   Float p = approx_expf_P<Float,DEGREE>::impl(y);
 
   // cout << "x=" << x << "  e=" << e << "  y=" << y << "  p=" << p <<"\n";
-  UInt biased_exponent= e+127;
+  UInt biased_exponent= UInt(e+127);
   auto f  =  toIF<Float>::uitof(biased_exponent<<23);
   
   return p * f;
