@@ -25,7 +25,7 @@ typedef float __attribute__( ( vector_size( 64 ) ) ) float32x16_t;
 //}
 
 
-#ifndef FATLIB
+
 
 float32x4_t __attribute__ ((__target__ ("default")))
  myExp(float32x4_t vx) {
@@ -40,7 +40,7 @@ float32x8_t  __attribute__ ((__target__ ("default"))) myExp(float32x8_t vx) {
 float32x16_t __attribute__ ((__target__ ("default"))) myExp(float32x16_t vx)  {
   return approx_expf<decltype(vx),6,fma>(vx);
 }
-#endif
+
 
 
 #ifdef FATLIB
@@ -66,28 +66,81 @@ myExp(float32x4_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
 
+
+float32x8_t __attribute__ ((__target__ ("arch=haswell")))  
+myExp(float32x8_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+
 float32x4_t __attribute__ ((__target__ ("avx512f")))
 myExp(float32x4_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
 
 
-float32x8_t __attribute__ ((__target__ ("arch=haswell")))  myExp(float32x8_t vx) {
+float32x8_t  __attribute__ ((__target__ ("avx512f"))) 
+myExp(float32x8_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
 
-float32x8_t  __attribute__ ((__target__ ("avx512f"))) myExp(float32x8_t vx) {
+float32x16_t  __attribute__ ((__target__ ("avx512f"))) 
+myExp(float32x16_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
-
-float32x16_t  __attribute__ ((__target__ ("avx512f"))) myExp(float32x16_t vx) {
-  return approx_expf<decltype(vx),6,true>(vx);
-}
-
-
-
 
 #endif
+
+#ifdef MULTILIB
+
+float32x4_t __attribute__ ((__target__ ("sse3")))
+myExp_3(float32x4_t vx) {
+  return approx_expf<decltype(vx),6,false>(vx);
+}
+
+
+float32x4_t __attribute__ ((__target__ ("arch=nehalem")))
+myExp_4(float32x4_t vx) {
+  return approx_expf<decltype(vx),6,false>(vx);
+}
+
+float32x4_t __attribute__ ((__target__ ("arch=haswell")))
+myExp_avx2(float32x4_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+float32x4_t __attribute__ ((__target__ ("arch=bdver1")))
+myExp_fma4(float32x4_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+
+float32x8_t __attribute__ ((__target__ ("arch=haswell")))  
+myExp_avx2(float32x8_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+
+float32x4_t __attribute__ ((__target__ ("avx512f")))
+myExp_512(float32x4_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+
+float32x8_t  __attribute__ ((__target__ ("avx512f"))) 
+myExp_512(float32x8_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+float32x16_t  __attribute__ ((__target__ ("avx512f"))) 
+myExp_512(float32x16_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
+}
+
+#endif
+
+
+
 
 #ifndef NOMAIN
 
