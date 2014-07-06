@@ -291,12 +291,12 @@ inline Float __attribute__((always_inline)) unsafe_expf_impl(Float x) {
 #ifndef NO_APPROX_MATH
 
 template<typename Float, int DEGREE, bool FMA>
-inline Float unsafe_expf(Float x) {
+inline Float  __attribute__((always_inline)) unsafe_expf(Float x) {
   return  unsafe_expf_impl<Float,DEGREE, FMA>(x); 
 }
 
 template<typename Float, int DEGREE, bool FMA>
-inline Float approx_expf(Float x) {
+inline Float  __attribute__((always_inline)) approx_expf(Float x) {
   using namespace approx_math;
   constexpr Float zero{0.f};
   constexpr Float inf_threshold = zero+float(0x5.8b90cp4);

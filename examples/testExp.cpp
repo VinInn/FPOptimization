@@ -15,7 +15,7 @@ typedef float __attribute__( ( vector_size( 32 ) ) ) float32x8_t;
 typedef float __attribute__( ( vector_size( 64 ) ) ) float32x16_t;
 
 // namespace {
-#ifdef FMA
+#ifdef DOFMA
 #define fma true
 // constexpr bool fma=true;
 #else
@@ -24,22 +24,32 @@ typedef float __attribute__( ( vector_size( 64 ) ) ) float32x16_t;
 #endif
 //}
 
-float32x4_t __attribute__ ((target ("default")))
+
+#ifndef FATLIB
+
+float32x4_t __attribute__ ((__target__ ("default")))
  myExp(float32x4_t vx) {
   return approx_expf<decltype(vx),6,fma>(vx);
 }
 
 
-float32x8_t  __attribute__ ((target ("default"))) myExp(float32x8_t vx) {
+float32x8_t  __attribute__ ((__target__ ("default"))) myExp(float32x8_t vx) {
   return approx_expf<decltype(vx),6,fma>(vx);
 }
 
-float32x16_t __attribute__ ((target ("default"))) myExp(float32x16_t vx)  {
+float32x16_t __attribute__ ((__target__ ("default"))) myExp(float32x16_t vx)  {
   return approx_expf<decltype(vx),6,fma>(vx);
 }
+#endif
 
 
 #ifdef FATLIB
+
+float32x4_t __attribute__ ((__target__ ("sse3")))
+myExp(float32x4_t vx) {
+  return approx_expf<decltype(vx),6,false>(vx);
+}
+
 
 float32x4_t __attribute__ ((__target__ ("arch=nehalem")))
 myExp(float32x4_t vx) {
@@ -62,23 +72,24 @@ myExp(float32x4_t vx) {
 }
 
 
-float32x8_t __attribute__ ((target ("arch=haswell")))  myExp(float32x8_t vx) {
+float32x8_t __attribute__ ((__target__ ("arch=haswell")))  myExp(float32x8_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
 
-float32x8_t  __attribute__ ((target ("avx512f"))) myExp(float32x8_t vx) {
+float32x8_t  __attribute__ ((__target__ ("avx512f"))) myExp(float32x8_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
 
-
-float32x16_t __attribute__ ((target ("avx512f")))  myExp(float32x16_t vx) {
-  return approx_expf<decltype(vx),6, true>(vx);
+float32x16_t  __attribute__ ((__target__ ("avx512f"))) myExp(float32x16_t vx) {
+  return approx_expf<decltype(vx),6,true>(vx);
 }
+
 
 
 
 #endif
 
+#ifndef NOMAIN
 
 int main() {
 
@@ -99,3 +110,6 @@ int main() {
   return 0;
 
 }
+
+
+#endif
