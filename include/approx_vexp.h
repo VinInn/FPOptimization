@@ -234,8 +234,6 @@ inline Float unsafe_expf_impl(Float x) {
   */
   // constexpr Float rnd_cst = Float(0xc.p20);
   constexpr float inv_log2f = float(0x1.715476p0);
-  constexpr float log2H = float(0xb.172p-4);
-  constexpr float log2L = float(0x1.7f7d1cp-20);
   
    
   // This is doing round(x*inv_log2f) to the nearest integer
@@ -248,6 +246,8 @@ inline Float unsafe_expf_impl(Float x) {
 
   Float y;
 #ifndef FMA 
+  constexpr float log2H = float(0xb.172p-4);
+  constexpr float log2L = float(0x1.7f7d1cp-20);
   // Cody-and-Waite accurate range reduction. FMA-safe.
   y = x;
   y -= z*log2H;
