@@ -33,11 +33,13 @@ float32x4_t __attribute__ ((__target__ ("default")))
 }
 
 
-float32x8_t  __attribute__ ((__target__ ("default"))) myExp(float32x8_t vx) {
+float32x8_t  __attribute__ ((__target__ ("default"))) 
+myExp(float32x8_t vx) {
   return approx_expf<decltype(vx),6,fma>(vx);
 }
 
-float32x16_t __attribute__ ((__target__ ("default"))) myExp(float32x16_t vx)  {
+float32x16_t __attribute__ ((__target__ ("default"))) 
+myExp(float32x16_t vx)  {
   return approx_expf<decltype(vx),6,fma>(vx);
 }
 
@@ -72,7 +74,8 @@ myExp(float32x8_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
 
-
+/*
+// not supported yet...
 float32x4_t __attribute__ ((__target__ ("avx512f")))
 myExp(float32x4_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
@@ -88,6 +91,7 @@ float32x16_t  __attribute__ ((__target__ ("avx512f")))
 myExp(float32x16_t vx) {
   return approx_expf<decltype(vx),6,true>(vx);
 }
+*/
 
 #endif
 

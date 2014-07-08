@@ -45,6 +45,12 @@ Not sure it makes that much sense in the vector context.
 #ifndef APPROX_MATH_N
 #define APPROX_MATH_N
 namespace approx_math {
+
+  typedef float __attribute__( ( vector_size( 16 ) ) ) float32x4_t;
+  typedef float __attribute__( ( vector_size( 32 ) ) ) float32x8_t;
+  typedef float __attribute__( ( vector_size( 64 ) ) ) float32x16_t;
+
+
   template<typename T>
   struct IntType { using type = T; };
   template<>
@@ -71,6 +77,29 @@ namespace approx_math {
     static constexpr auto elem(double x) -> double { return x;}	      
   };
 
+  
+  template<typename VF>
+  struct ConvertVector {
+    static constexpr int NV = sizeof(VF);
+    using F =  decltype(VType<VF>::elem(VF()));
+    static constexpr int N = NV/sizeof(F);
+    typedef typename IntType<F>::type __attribute__( ( vector_size(NV) ) ) itype;
+    static VF impl(itype i) { VF f; for (int j=0;j<N;++j) f[j]=i[j]; return f;}
+    static itype impl(VF f) { itype i; for (int j=0;j<N;++j) i[j]=f[j]; return i;}
+  };
+
+    // to be specialized for 2,4,8,16 float and double
+  template<>
+  struct ConvertVector<float32x4_t> {
+    using VF = float32x4_t;
+    static constexpr int NV = sizeof(VF);
+    using F =  decltype(VType<VF>::elem(VF()));
+    static constexpr int N = NV/sizeof(F);
+    typedef typename IntType<F>::type __attribute__( ( vector_size(NV) ) ) itype;
+    static VF impl(itype i) { return VF(_mm_cvtepi32_ps(__m128i(i)));}
+    static itype impl(VF f) { return itype(_mm_cvttps_epi32(__m128(f)));}
+  };
+
 
   template<typename VF>
   struct toIF {
@@ -78,6 +107,7 @@ namespace approx_math {
     // F is the float type
     static constexpr int NV = sizeof(VF);
     using F =  decltype(VType<VF>::elem(VF()));
+    static constexpr int N = NV/sizeof(F);
     typedef typename IntType<F>::type __attribute__( ( vector_size(NV) ) ) itype;
     typedef typename UIntType<F>::type __attribute__( ( vector_size(NV) ) ) uitype;
     static itype ftoi(VF f) { itype i; memcpy(&i,&f,NV); return i;}
@@ -85,12 +115,8 @@ namespace approx_math {
     static uitype ftoui(VF f) { uitype i; memcpy(&i,&f,NV); return i;}
     static VF uitof(uitype i) { VF f; memcpy(&f,&i,NV); return f;}
 
-    // to be specialized for 2,4,8,16 float and double
-    // static VF convert(itype i) { return _mm_cvtepi32_ps(i);}
-    // static itype convert(VF f) { return _mm_cvttps_epi32(f);}
-    //  this SLP-vectorize though
-    static VF convert(itype i) { VF f; for (int j=0;j<NV;++j) f[j]=i[j]; return f;}
-    static itype convert(VF f) { itype i; for (int j=0;j<NV;++j) i[j]=f[j]; return i;}
+    static VF convert(itype i) { return ConvertVector<VF>::impl(i);}
+    static itype convert(VF f) { return ConvertVector<VF>::impl(f);}
 
 
 
