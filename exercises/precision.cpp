@@ -8,7 +8,10 @@
 int main(int npar, char * pars[]) {
 
   constexpr auto maxf = std::numeric_limits<float>::max();
-  
+  constexpr auto epsf = std::numeric_limits<float>::epsilon();
+  printf("maxf=%g eps=%g\n",maxf,epsf);
+  printf("maxf=%a eps=%a\n",maxf,epsf);
+
 
   float a = 100.f+3.f/7.f;
   float b = 4.f/7.f;
@@ -34,15 +37,32 @@ int main(int npar, char * pars[]) {
   float w=s;
   for (auto i=0; i<1000000; ++i)
     w+=t;
-
   printf("w= %g %a\n",w,w);
 
   w=0;
   for (auto i=0; i<1000000; ++i)
     w+=t;
-
   printf("w= %g %a\n",w,w);
 
+
+  t = 0.501f*(nextafterf(s,maxf)-s);
+  w=s;
+  for (auto i=0; i<1000000; ++i)
+    w+=t;
+  printf("w= %g %a\n",w,w);
+
+  t = 0.499f*(nextafterf(s,maxf)-s);
+  w=s;
+  for (auto i=0; i<1000000; ++i)                                    
+    w+=t;
+  printf("w= %g %a\n",w,w);
+
+  w=0;
+  for (auto i=0; i<1000000; ++i)
+    w+=t;
+  printf("w= %g %a\n",w,w);
+
+  printf("maxerr=%g %a\n",1000000*epsf*64,1000000*epsf*64);
 
   return 0;
 
