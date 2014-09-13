@@ -23,8 +23,15 @@ void naiveSolver() {
 
 }
 
-
+#include<iostream>
 #include<algorithm>
+#include <x86intrin.h>
+
+inline unsigned long long refClock() {
+  unsigned int taux=0;
+  return __rdtscp(&taux);
+}
+
 double driver(int seed) {
    c[0]=seed; a[0] = 1.; b[0]=2.*seed;
    for (int i=1; i!=1024; ++i) {
@@ -33,8 +40,11 @@ double driver(int seed) {
       b[i] = (i%2) ? 2.f*std::sqrt(std::abs(a[i]*c[i])) + 0.001f : 16*seed*seed*i*i;
    }
 
+  long long tim = -refClock();
   naiveSolver();
   // solver();
+  tim += refClock();
+  std::cout << "time " << tim << std::endl;
   double ret=0;
   for (int i=0; i!=1024; ++i)
     ret+= std::min(std::abs(x1[i]),std::abs(x2[i]));
