@@ -27,7 +27,9 @@ float kernel(int maxl) {
 
 int main() {
 #ifdef ESC_SERVER
-  int seed = 500000*esc_start("iris.pd.infn.it:5202", "2", "1001", "aaa"); 
+  int seed = 500000*esc_start("iris.pd.infn.it:5202", "2", 
+                              "1001", "aaa"); 
+//                              "root", "aaa");
 #else
   int seed = 1000000;
 #endif
