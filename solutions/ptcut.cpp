@@ -121,43 +121,46 @@ int main() {
  {
    // phi cut 
    long long tl = -refClock();
-   constexpr float phicut = 0.1f;
+   constexpr float phicut = 0.125f;
    float sq=0.;
+   int tot =0;
    for (int i=0;i!=NN-1;++i) {
      for (int j=i+1;j<std::min(i+16,NN);++j) {
        if (dphi(phi(x[i],y[i]),phi(x[j],y[j]))<phicut) 
-	 sq+= x[j]+y[j];
+	 { sq+= x[j]+y[j]; ++tot;}
      }
    }
    tl += refClock();
    
    if(pr)
-     printf("phicut %f : %f\n",double(tl)/double(NN*ok),sq);
+     printf("phicut %f : %f %d\n",double(tl)/double(NN*ok),sq,tot);
  }
 
  {
    // cos cut 
    long long tl = -refClock();
-   constexpr float coscut = std::cos(0.1f);
+   constexpr float coscut = std::cos(0.125f);
    float sq=0.;
+   int tot =0;
    for (int i=0;i!=NN-1;++i) {
      for (int j=i+1;j<std::min(i+16,NN);++j) {
        if (cdphi(x[i],y[i],x[j],y[j])>coscut) 
-	 sq+= x[j]+y[j];
+	 { sq+= x[j]+y[j];  ++tot;}
      }
    }
    tl += refClock();
    
    if(pr)
-     printf("coscut %f : %f\n",double(tl)/double(NN*ok),sq);
+     printf("coscut %f : %f %d\n",double(tl)/double(NN*ok),sq,tot);
  }
 
  {
    // opt cos cut 
    long long tl = -refClock();
-   constexpr float coscut = std::cos(0.1f);
+   constexpr float coscut = std::cos(0.125f);
    constexpr float coscut2 = std::copysign(coscut*coscut,coscut); 
    float sq=0.;
+   int tot =0;
    for (int i=0;i!=NN-1;++i) {
      // auto m1 = pt2(x[i],y[i]);
      for (int j=i+1;j<std::min(i+16,NN);++j) {
@@ -165,13 +168,13 @@ int main() {
        if (
 	   std::copysign(d*d,d) > coscut2*pt2(x[i],y[i])*pt2(x[j],y[j])
 	   // std::copysign(d*d,d) > coscut2*m1*pt2(x[j],y[j])
-	   ) sq+= x[j]+y[j];
+	   ) { sq+= x[j]+y[j]; ++tot;}
      }
    }
    tl += refClock();
    
    if(pr)
-     printf("opt coscut %f : %f\n",double(tl)/double(NN*ok),sq);
+     printf("opt coscut %f : %f %d\n",double(tl)/double(NN*ok),sq,tot);
  }
 
 
