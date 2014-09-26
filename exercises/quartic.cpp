@@ -3,32 +3,14 @@
 float a[1024],b[1024],c[1024], x1[1024],x2[1024];
 
 void solver() {
-
-   for (int i=0; i!=1024; ++i) {
-    double det = double(b[i])*double(b[i])-4*double(a[i])*double(c[i]);
-    float q = -0.5f*(std::copysign(std::sqrt(float(det)),b[i])+b[i]);
-    x1[i] = q/a[i];
-    x2[i] = c[i]/q;
-   }
-
 }
 
-void dsolver() {
-
-   for (int i=0; i!=1024; ++i) {
-    double det = double(b[i])*double(b[i])-4*double(a[i])*double(c[i]);
-    double q = -0.5*(std::copysign(std::sqrt(det),b[i])+b[i]);
-    x1[i] = q/a[i];
-    x2[i] = c[i]/q;
-   }
-
-}
 
 
 void naiveSolver() {
 
    for (int i=0; i!=1024; ++i) {
-    double det = b[i]*b[i]-4.f*a[i]*c[i];
+    float det = b[i]*b[i]-4.f*a[i]*c[i];
     x1[i] = (-b[i]-std::sqrt(det))/(2.f*a[i]);
     x2[i] = (-b[i]+std::sqrt(det))/(2.f*a[i]);
    }
@@ -53,8 +35,8 @@ double driver(int seed) {
    }
 
   long long tim = -refClock();
-  // naiveSolver();
-  dsolver();
+  naiveSolver();
+  // solver();
   tim += refClock();
   std::cout << "time " << tim << std::endl;
   double ret=0;
