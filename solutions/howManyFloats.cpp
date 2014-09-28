@@ -22,7 +22,7 @@ int kernel(int num) {
 
 int main() {
 #ifdef ESC_SERVER
-  int seed = esc_start("iris.pd.infn.it:5202", "2", "1001", "aaa"); 
+  int seed = esc_start("iris.pd.infn.it:5202", "2", "root", "aaa"); 
 #else
   int seed = 1000;
 #endif

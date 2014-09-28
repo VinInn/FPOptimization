@@ -13,11 +13,14 @@ void solver() {
 
 }
 
+
 void dsolver() {
+  using Double = __float128;
+//  using Double = double;
 
    for (int i=0; i!=1024; ++i) {
-    double det = double(b[i])*double(b[i])-4*double(a[i])*double(c[i]);
-    double q = -0.5*(std::copysign(std::sqrt(det),b[i])+b[i]);
+    Double det = Double(b[i])*Double(b[i])-4*Double(a[i])*Double(c[i]);
+    Double q = -0.5*(std::copysign(sqrt(det),b[i])+b[i]);
     x1[i] = q/a[i];
     x2[i] = c[i]/q;
    }
@@ -63,14 +66,28 @@ double driver(int seed) {
   return ret;
 }
 
+
+
+#ifdef ESC_SERVER
+#include "api.h"
+#endif
+
 #include<iostream>
 int main() {
 
+#ifdef ESC_SERVER
+  int seed = esc_start("iris.pd.infn.it:5202", "2", "root", "aaa"); 
+#else
    int seed=2;
+#endif
 
    double solution = driver(seed);
 
    std::cout << "solution = " << solution << std::endl;
 
+#ifdef ESC_SERVER
+  return esc_finish(&solution, 1, ESC_TYPE_INT, ESC_ACCURACY_DEFAULT);
+#else
    return 0;
+#endif
 };
